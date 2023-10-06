@@ -1,0 +1,4 @@
+h1 = @page.name
+= render partial: 'page_hierarchy', locals: { hierarchy: @hierarchy }
+- if @page.content
+  .content = @page.content.html_safe

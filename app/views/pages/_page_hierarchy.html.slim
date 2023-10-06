@@ -1,4 +1,4 @@
 ul
   li = link_to hierarchy[:name], hierarchy[:path]
-  - hierarchy[:pages].each do |hierarchy|
-    = render partial: 'page_hierarchy', locals: { hierarchy: hierarchy }
+  - hierarchy[:pages].each do |page_hierarchy|
+    = render partial: 'page_hierarchy', locals: { hierarchy: page_hierarchy }

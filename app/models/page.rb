@@ -6,7 +6,7 @@ class Page < ApplicationRecord
 
   # Returns relative path to page according to our routing system
   def path
-    "#{parent_page&.path}/#{name}"
+    "#{parent_page&.path&.+ '/'}#{name}"
   end
 
   # Returns hierarchy tree for rendering

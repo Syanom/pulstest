@@ -1,0 +1,4 @@
+ul
+  li = link_to hierarchy[:name], '/'
+  - hierarchy[:pages].each do |hierarchy|
+    = render partial: 'page_hierarchy', locals: { hierarchy: hierarchy }

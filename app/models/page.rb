@@ -5,12 +5,12 @@ class Page < ApplicationRecord
   scope :root, -> { where(parent_page_id: nil) }
 
   # Returns relative path to page according to our routing system
-  def get_path
-    "#{parent_page.get_path if parent_page}/#{name}"
+  def path
+    "#{parent_page&.path}/#{name}"
   end
 
   # Returns hierarchy tree for rendering
-  def get_hierarchy
-    { name: name, path: get_path, pages: child_pages.map { |page| page.get_hierarchy } }
+  def hierarchy
+    { name: name, path: path, pages: child_pages.map { |page| page.hierarchy } }
   end
 end

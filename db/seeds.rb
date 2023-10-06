@@ -5,3 +5,12 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+
+Page.create([{ name: 'Root_Page1', content_raw: 'content' },
+             { name: 'firstborn1', content_raw: 'content', parent_page_id: 1 },
+             { name: 'firstborn2', content_raw: 'content', parent_page_id: 1 },
+             { name: 'secondborn1', content_raw: 'content', parent_page_id: 2 },
+             { name: 'secondborn2', content_raw: 'content', parent_page_id: 2 },
+             { name: 'secondborn3', content_raw: 'content', parent_page_id: 2 },
+             { name: 'thirdborn1', content_raw: 'content', parent_page_id: 4 },
+             { name: 'thirdborn2', content_raw: 'content', parent_page_id: 4 }])

@@ -14,6 +14,7 @@ ActiveRecord::Schema.define(version: 2023_10_05_083857) do
 
   create_table "pages", force: :cascade do |t|
     t.string "name", null: false
+    t.string "header"
     t.text "content"
     t.text "content_raw"
     t.integer "parent_page_id"

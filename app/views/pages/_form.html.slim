@@ -1,7 +1,12 @@
 = form_for @page, url: update_page_path do |form|
+  - if current_page?(action: 'new')
+    p
+      = form.label :name
+      = form.text_field :name
+  
   p
-    = form.label :name
-    = form.text_field :name
+    = form.label :header
+    = form.text_field :header
 
   p
     = form.label :content

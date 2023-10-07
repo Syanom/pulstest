@@ -41,7 +41,7 @@ class PagesController < ApplicationController
   private
 
   def page_params
-    params.require(:page).permit(:name, :content_raw)
+    params.require(:page).permit(:name, :content_raw, :header)
   end
 
   def find_page

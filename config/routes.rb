@@ -3,5 +3,7 @@ Rails.application.routes.draw do
 
   root to: 'pages#index'
 
+  get '*pages/edit', to: 'pages#edit'
   get '*pages', to: 'pages#show'
+  patch '*pages', to: 'pages#update'
 end

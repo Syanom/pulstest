@@ -1,6 +1,7 @@
 class PagesController < ApplicationController
-  before_action :find_page, only: %i[show edit update]
-  before_action :validate_route, only: %i[show edit update]
+  # I don't use except instead of only, except can lead to troubles later
+  before_action :find_page, only: %i[show edit update new create]
+  before_action :validate_route, only: %i[show edit update new create]
 
   def index
     @page_hierarchies = Page.root.map(&:hierarchy)
@@ -16,8 +17,24 @@ class PagesController < ApplicationController
     if @page.update(page_params)
       redirect_to page_path(@page.path)
     else
-      # Use find_page because .update overwrite @page and breaks routes
-      redirect_to edit_page_path(find_page.path)
+      render :edit
+    end
+  end
+
+  def new
+    # Callbacks will find and validate parent page for us. We want validation
+    # We redefine @page to not have parant page params prefilled for new one
+    @page = Page.new
+    render :edit
+  end
+
+  def create
+    # Callbacks will find and validate parent page for us. We use it to create new page
+    @page = Page.new(page_params.merge(parent_page_id: @page.id))
+    if @page.save
+      redirect_to page_path(@page.path)
+    else
+      render :new
     end
   end
 

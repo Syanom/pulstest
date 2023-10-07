@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 2023_10_05_083857) do
     t.integer "parent_page_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["name"], name: "index_pages_on_name", unique: true
     t.index ["parent_page_id"], name: "index_pages_on_parent_page_id"
   end
 

@@ -1,7 +1,7 @@
 class CreatePages < ActiveRecord::Migration[6.0]
   def change
     create_table :pages do |t|
-      t.string :name, unique: true, null: false
+      t.string :name, null: false, index: { unique: true }
       t.text :content
       t.text :content_raw
       t.references :parent_page

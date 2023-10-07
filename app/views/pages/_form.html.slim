@@ -1,0 +1,10 @@
+= form_for @page, url: update_page_path do |form|
+  p
+    = form.label :name
+    = form.text_field :name
+
+  p
+    = form.label :content
+    = form.text_area :content, value: @page.content_raw, id: :content_raw, rows: 7, cols: 60
+
+  p = form.submit class: 'btn btn-primary'

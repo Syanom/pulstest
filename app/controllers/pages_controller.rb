@@ -10,18 +10,26 @@ class PagesController < ApplicationController
     @hierarchy = @page.hierarchy
   end
 
-  def edit
-    Rails.logger.info("\nedit action triggered\n")
-  end
+  def edit; end
 
   def update
-    Rails.logger.info("\nupdate action triggered\n")
+    if @page.update(page_params)
+      redirect_to page_path(@page.path)
+    else
+      # Use find_page because .update overwrite @page and breaks routes
+      redirect_to edit_page_path(find_page.path)
+    end
   end
 
   private
 
+  def page_params
+    params.require(:page).permit(:name, :content_raw)
+  end
+
   def find_page
     @page = Page.find_by(name: params[:pages].split('/').last)
+    @page || (raise ActionController::RoutingError, 'Not Found')
   end
 
   def validate_route

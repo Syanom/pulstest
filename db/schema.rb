@@ -12,12 +12,15 @@
 
 ActiveRecord::Schema.define(version: 2023_10_05_083857) do
 
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
+
   create_table "pages", force: :cascade do |t|
     t.string "name", null: false
     t.string "header"
     t.text "content"
     t.text "content_raw"
-    t.integer "parent_page_id"
+    t.bigint "parent_page_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_pages_on_name", unique: true

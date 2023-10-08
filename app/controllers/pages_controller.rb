@@ -49,10 +49,14 @@ class PagesController < ApplicationController
 
     @page = Page.find_by(name: params[:pages].split('/').last)
     @page || (raise ActionController::RoutingError, 'Not Found')
+  rescue StandardError
+    render file: "#{Rails.root}/public/404", status: :not_found
   end
 
   def validate_route
     # I decided to check if the client knew the exact page hierarchy to access it.
     raise ActionController::RoutingError, 'Not Found' unless @page&.path == params[:pages]
+  rescue StandardError
+    render file: "#{Rails.root}/public/404", status: :not_found
   end
 end

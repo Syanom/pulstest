@@ -45,6 +45,9 @@ GEM
     activerecord (6.0.6.1)
       activemodel (= 6.0.6.1)
       activesupport (= 6.0.6.1)
+    activerecord-hierarchical_query (1.4.4)
+      activerecord (>= 5.0, < 7.1)
+      pg (>= 0.21, < 1.6)
     activestorage (6.0.6.1)
       actionpack (= 6.0.6.1)
       activejob (= 6.0.6.1)
@@ -241,6 +244,7 @@ PLATFORMS
   x86_64-darwin-21
 
 DEPENDENCIES
+  activerecord-hierarchical_query
   bootsnap (>= 1.4.2)
   byebug
   capybara (>= 2.15)

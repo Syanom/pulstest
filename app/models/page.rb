@@ -11,20 +11,31 @@ class Page < ApplicationRecord
 
   # Returns relative path to page according to our routing system
   def path
-    "#{parent_page&.path&.+ '/'}#{name}"
+    Page.join_recursive do |query|
+      query
+        .start_with(id: id) { select('0 depth') }
+        .select(query.prior[:depth] - 1, start_with: false)
+        .connect_by(parent_page_id: :id)
+    end.order('depth ASC').pluck(:name).join('/')
   end
 
   # Returns hierarchy tree for rendering
   def hierarchy
-    page_path = path
-    { name: name, path: page_path, pages: child_pages.map { |p| p.recursive_hierarchy(page_path) } }
+    # get whole hierarchy and group for future use
+    pages = Page.join_recursive do |query|
+      query.start_with(parent_page_id: id)
+           .connect_by(id: :parent_page_id)
+    end.group_by(&:parent_page_id)
+
+    { name: name, path: path, pages: pages[id] ? hasify_children(pages, id, "#{path}/") : [] }
   end
 
   protected
 
-  # Method is protected bc its not for outside use
-  def recursive_hierarchy(parent_path)
-    page_path = "#{parent_path}/#{name}"
-    { name: name, path: page_path, pages: child_pages.map { |p| p.recursive_hierarchy(page_path) } }
+  def hasify_children(pages, parent_id, parent_path)
+    pages[parent_id].map do |page|
+      { name: page.name, path: "#{parent_path}#{page.name}",
+        pages: pages[page.id] ? hasify_children(pages, page.id, "#{parent_path}#{page.name}/") : [] }
+    end
   end
 end

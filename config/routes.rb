@@ -4,8 +4,8 @@ Rails.application.routes.draw do
   root to: 'pages#index'
 
   get '*pages/edit', to: 'pages#edit', as: 'edit_page'
-  get '*pages/add', to: 'pages#new', as: 'new_page'
+  get '(*pages)/add', to: 'pages#new', as: 'new_page'
   get '*pages', to: 'pages#show', as: 'page'
   patch '*pages', to: 'pages#update', as: 'update_page'
-  post '*pages', to: 'pages#create', as: 'create_page'
+  post '(*pages)', to: 'pages#create', as: 'create_page'
 end

@@ -1,4 +1,8 @@
-= form_for @page, url: update_page_path do |form|
+= form_for @page, url: create_page_path(params[:pages]) do |form|
+  p
+    = form.label :name
+    = form.text_field :name
+  
   p
     = form.label :header
     = form.text_field :header

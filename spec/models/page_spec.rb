@@ -61,4 +61,24 @@ RSpec.describe Page, type: :model do
                   pages: [name: 'page2', path: 'page/page2', pages: [name: 'page3', path: 'page/page2/page3', pages: []]] }
     expect(page.hierarchy).to eq(hierarchy)
   end
+
+  it 'produces content out of content_raw' do
+    page = FactoryBot.create(:page, content: nil, content_raw: 'content')
+    expect(page.content).not_to be nil
+  end
+
+  it 'replaces *[content]* with <b>content</b>' do
+    page = FactoryBot.create(:page, content_raw: '*[content]*')
+    expect(page.content).to eq('<b>content</b>')
+  end
+
+  it 'replaces \\\\content\\\\ with <i>content</i>' do
+    page = FactoryBot.create(:page, content_raw: '\\\\content\\\\')
+    expect(page.content).to eq('<i>content</i>')
+  end
+
+  it 'replaces ((name1/name2/name3 content)) with <a href="/name1/name2/name3">content</a>' do
+    page = FactoryBot.create(:page, content_raw: '((name1/name2/name3 content))')
+    expect(page.content).to eq('<a href="/name1/name2/name3">content</a>')
+  end
 end

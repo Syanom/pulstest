@@ -16,6 +16,15 @@ class Page < ApplicationRecord
 
   # Returns hierarchy tree for rendering
   def hierarchy
-    { name: name, path: path, pages: child_pages.map { |page| page.hierarchy } }
+    page_path = path
+    { name: name, path: page_path, pages: child_pages.map { |p| p.recursive_hierarchy(page_path) } }
+  end
+
+  protected
+
+  # Method is protected bc its not for outside use
+  def recursive_hierarchy(parent_path)
+    page_path = "#{parent_path}/#{name}"
+    { name: name, path: page_path, pages: child_pages.map { |p| p.recursive_hierarchy(page_path) } }
   end
 end
